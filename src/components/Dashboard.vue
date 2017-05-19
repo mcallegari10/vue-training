@@ -10,7 +10,7 @@
           button.search-button(type='submit')
             img(src='../assets/search.svg')
       .books-container
-        .book(v-for='book of filteredBooks')
+        router-link.book(v-for='book of filteredBooks'  :key='book.id'  :to='{ name: "bookDetail", params: { id: book.id }}')
           img.book-cover(:src='book.image_url'  :class='{ "no-cover": !book.image_url }')
           h5.book-title
             | {{ book.title }}
@@ -108,6 +108,8 @@ export default dashboard;
     justify-content: space-between;
     margin: 0 20px 65px 0;
     max-width: 130px;
+    text-decoration: none;
+    color: $black;
     width: 100%;
 
     .book-cover {
