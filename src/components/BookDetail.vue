@@ -2,7 +2,7 @@
   .book-detail-container
     router-link.go-back(:to='{ name: "dashboard" }')
       | < Volver
-    .book-detail
+    .book-detail(v-if='!error')
       img.book-cover(:src='book.image_url'  :class='{ "no-cover": !book.image_url }')
       .book-info
         h4.title
@@ -17,32 +17,44 @@
           | {{ summary }}
         button.rent-button
           | Alquilar
+    .book-detail(v-if='error')
+      | 404 Book not found!
 </template>
 
 <script>
-import books from '../resources/books.json';
+import books from '../resources/books.json'
 
 const bookDetail = {
   name: 'bookDetail',
   data() {
     return {
-      summary: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
-    };
+      book: {},
+      summary: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+      error: false
+    }
   },
-  computed: {
-    book() {
-      const bookId = parseInt(this.$router.currentRoute.params.id, 10);
-      return books.filter((book) => {
-        return book.id === bookId;
-      })[0];
+  created() {
+    this.searchBook()
+    if (this.book) {
+      this.error = false
+    } else {
+      this.error = true
+    }
+  },
+  methods: {
+    searchBook() {
+      const bookId = parseInt(this.$router.currentRoute.params.id, 10)
+      this.book = books.filter((book) => {
+        return book.id === bookId
+      })[0]
     }
   }
-};
+}
 
-export default bookDetail;
+export default bookDetail
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import "../scss/variables";
 
 .go-back {
@@ -50,10 +62,58 @@ export default bookDetail;
   color: $black;
 }
 
-.book-detail-container {
+.book-detail {
+  border-bottom: 2px solid $blue-1;
+  display: flex;
+  justify-content: center;
+  margin: 40px auto;
+  max-width: 800px;
+  padding-bottom: 35px;
+
+  .book-cover {
+    width: 190px;
+    height: 270px;
+    margin-right: 20px;
+  }
 
   .no-cover {
     background: url('../assets/default_book.svg') no-repeat center $grey-2;
+  }
+
+  .book-info {
+    display: flex;
+    flex-direction: column;
+    max-width: 540px;
+    width: 100%;
+
+    .title {
+      margin-top: 0;
+    }
+
+    .author {
+      margin-bottom: 20px;
+    }
+
+    .year {
+      margin-bottom: 10px;
+    }
+
+    .summary {
+      font-size: 14px;
+      color: $grey-3;
+      line-height: 19px;
+    }
+
+    .rent-button {
+      border: 0;
+      background-color: $blue-1;
+      color: $white;
+      font-weight: bold;
+      font-size: 20px;
+      margin-top: 20px;
+      max-width: 190px;
+      height: 40px;
+    }
   }
 }
 

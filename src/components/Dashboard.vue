@@ -10,7 +10,7 @@
           button.search-button(type='submit')
             img(src='../assets/search.svg')
       .books-container
-        router-link.book(v-for='book of filteredBooks'  :key='book.id'  :to='{ name: "bookDetail", params: { id: book.id }}')
+        router-link.book(v-for='book of filteredBooks'  :key='book.id'  :to='{ name: "book", params: { id: book.id }}')
           img.book-cover(:src='book.image_url'  :class='{ "no-cover": !book.image_url }')
           h5.book-title
             | {{ book.title }}
@@ -19,13 +19,13 @@
 </template>
 
 <script>
-import books from '../resources/books.json';
+import books from '../resources/books.json'
 
 const filterOptions = [
   { label: 'Seleccionar filtro', value: '' },
   { label: 'Autor', value: 'author' },
   { label: 'Nombre', value: 'title' }
-];
+]
 
 const dashboard = {
   name: 'dashboard',
@@ -36,18 +36,18 @@ const dashboard = {
       filterAtt: '',
       books,
       filteredBooks: books
-    };
+    }
   },
   methods: {
     filterBooks() {
       this.filteredBooks = this.books.filter((book) => {
-        return book[this.filterAtt].toLowerCase().includes(this.filterValue.toLowerCase());
-      });
+        return book[this.filterAtt].toLowerCase().includes(this.filterValue.toLowerCase())
+      })
     }
   }
-};
+}
 
-export default dashboard;
+export default dashboard
 </script>
 
 <style lang="scss" scoped>
