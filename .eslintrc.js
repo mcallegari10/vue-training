@@ -27,7 +27,7 @@ module.exports = {
     "comma-dangle": ["error", "never"],
     "arrow-body-style": ["error", "always"],
     "func-names": ["error", "never"],
-    "space-before-function-paren": ["error", "never"],
+    // "space-before-function-paren": ["error", "never"],
     "semi": ["error", "never"],
     // don't require .vue extension when importing
     'import/extensions': ['error', 'always', {
