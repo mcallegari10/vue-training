@@ -26,6 +26,7 @@ import books from '../resources/books.json'
 
 const bookDetail = {
   name: 'bookDetail',
+  props: ['id'],
   data() {
     return {
       book: {},
@@ -43,9 +44,8 @@ const bookDetail = {
   },
   methods: {
     searchBook() {
-      const bookId = parseInt(this.$router.currentRoute.params.id, 10)
       this.book = books.filter((book) => {
-        return book.id === bookId
+        return book.id === this.id
       })[0]
     }
   }

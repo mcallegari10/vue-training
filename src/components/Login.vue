@@ -11,20 +11,27 @@
       .errors(v-if='errors.has("email")')
         span.error(v-if='errors.firstRule("email") === "required"')
           | El campo es requerido
+      .errors(v-if='errors.has("email")')
+        span.error(v-if='errors.firstRule("email") === "email"')
+          | Debe ingresar un email valido
       label.data-label(for='password')
         | Contraseña
-      input.data-input(type='password' v-model='password' v-validate='"required|between:{min: 2, max: 52}"' name='password')
+      input.data-input(type='password' v-model='password' v-validate='"required|min: 2"' maxlength='52' name='password')
       .errors(v-if='errors.has("password")')
         span.error(v-if='errors.firstRule("password") === "required"')
           | El campo es requerido
-        span.error(v-if='errors.firstRule("password") === "between"')
+        span.error(v-if='errors.firstRule("password") === "min"')
           | El campo debe ser de una longitud minima de 2 caracteres
-      button.login-button(type='submit')
-        | Ingresar
+      .buttons-container
+        button.login-button(type='submit')
+          | Ingresar
+        button.register(type='button')
+          | Registrarse
 </template>
 
 <script>
 import sessionService from '../services/sessionService'
+import auth from '../auth'
 
 const login = {
   name: 'login',
@@ -35,21 +42,17 @@ const login = {
       showError: false
     }
   },
-  computed: {
-    validForm() {
-      return this.fields.email.valid && this.fields.password.valid
-    }
-  },
   methods: {
     login() {
-      if (this.validForm) {
+      this.$validator.validateAll().then(() => {
         sessionService.login(this.email, this.password).then((response) => {
-          console.log(response)
           this.showError = false
+          auth.login(response)
+          this.$router.push({ name: 'dashboard' })
         }).catch(() => {
           this.showError = true
         })
-      }
+      })
     }
   }
 }
@@ -64,7 +67,7 @@ export default login
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 200px auto;
+  margin: 150px auto;
 
   .title {
     font-weight: bold;
@@ -90,21 +93,31 @@ export default login
       line-height: 19px;
     }
 
-    .login-button {
-      background-color: $green-1;
-      border: none;
-      color: $white;
-      display: flex;
-      height: 40px;
-      justify-content: center;
-      width: 175px;
-    }
-
     .error {
       color: $red;
       font-size: 14px;
       font-weight: 100;
       align-self: center;
+    }
+
+    .buttons-container {
+        display: flex;
+
+      .login-button {
+        background-color: $green-1;
+        border: none;
+        color: $white;
+        display: flex;
+        height: 40px;
+        justify-content: center;
+        margin-right: 20px;
+        width: 175px;
+      }
+
+      .register {
+        border: none;
+        background-color: $white;
+      }
     }
   }
 }
