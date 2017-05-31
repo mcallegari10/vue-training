@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Dashboard from '@/components/Dashboard'
 import BookDetail from '@/components/BookDetail'
 import Login from '@/components/Login'
+import SignUp from '@/components/SignUp'
 import auth from '../auth'
 
 Vue.use(Router)
@@ -16,6 +17,13 @@ const router = new Router({
       path: '/login',
       name: 'login',
       component: Login,
+      meta: {
+        requiresAuth: false
+      }
+    }, {
+      path: '/signUp',
+      name: 'signUp',
+      component: SignUp,
       meta: {
         requiresAuth: false
       }

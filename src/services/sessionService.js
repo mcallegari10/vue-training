@@ -1,11 +1,15 @@
-import axios from 'axios'
+import api from './api'
 
-const sessionService = {
-  baseUrl: 'https://wbooks-api-stage.herokuapp.com/api/v1/'
+const sessionService = { }
+
+sessionService.login = (email, password) => {
+  return api.post('/users/sessions', { email, password }).then((response) => {
+    return response.data
+  })
 }
 
-sessionService.login = function (email, password) {
-  return axios.post(`${this.baseUrl}users/sessions`, { email, password }).then((response) => {
+sessionService.signUp = (user) => {
+  return api.post('/users', { user }).then((response) => {
     return response.data
   })
 }

@@ -11,7 +11,6 @@
       .errors(v-if='errors.has("email")')
         span.error(v-if='errors.firstRule("email") === "required"')
           | El campo es requerido
-      .errors(v-if='errors.has("email")')
         span.error(v-if='errors.firstRule("email") === "email"')
           | Debe ingresar un email valido
       label.data-label(for='password')
@@ -25,7 +24,7 @@
       .buttons-container
         button.login-button(type='submit')
           | Ingresar
-        button.register(type='button')
+        router-link.register(:to='{name: "signUp"}')
           | Registrarse
 </template>
 
@@ -115,6 +114,8 @@ export default login
       }
 
       .register {
+        text-decoration: none;
+        align-self: center;
         border: none;
         background-color: $white;
       }

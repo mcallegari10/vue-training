@@ -1,4 +1,4 @@
-const auth = {}
+const auth = { }
 
 auth.login = function (data) {
   localStorage.setItem('renew_id', data.renew_id)
@@ -12,12 +12,6 @@ auth.logout = function () {
 
 auth.isLoggedIn = function () {
   return localStorage.getItem('access_token')
-}
-
-auth.getAuthHeader = function () {
-  return {
-    Authorization: `Bearer ${localStorage.getItem('access_token')}`
-  }
 }
 
 export default auth
