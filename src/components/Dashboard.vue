@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import books from '../resources/books.json'
+import booksService from '../services/booksService'
 
 const filterOptions = [
   { label: 'Seleccionar filtro', value: '' },
@@ -34,9 +34,15 @@ const dashboard = {
       filterOptions,
       filterValue: '',
       filterAtt: '',
-      books,
-      filteredBooks: books
+      books: null,
+      filteredBooks: null
     }
+  },
+  created() {
+    booksService.getBooks().then((response) => {
+      this.books = response
+      this.filteredBooks = response
+    })
   },
   methods: {
     filterBooks() {

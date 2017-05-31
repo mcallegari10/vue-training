@@ -75,8 +75,7 @@ const signUp = {
   },
   methods: {
     signUp() {
-      sessionService.signUp(this.user).then((response) => {
-        console.log(response)
+      sessionService.signUp(this.user).then(() => {
         this.$router.push({ name: 'login' })
       })
     }

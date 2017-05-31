@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import books from '../resources/books.json'
+import booksService from '../services/booksService'
 
 const bookDetail = {
   name: 'bookDetail',
@@ -44,9 +44,9 @@ const bookDetail = {
   },
   methods: {
     searchBook() {
-      this.book = books.filter((book) => {
-        return book.id === this.id
-      })[0]
+      booksService.getBookDetail(this.id).then((response) => {
+        this.book = response
+      })
     }
   }
 }
