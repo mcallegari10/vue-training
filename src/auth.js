@@ -1,16 +1,16 @@
 const auth = { }
 
-auth.login = function (data) {
+auth.login = (data) => {
   localStorage.setItem('renew_id', data.renew_id)
   localStorage.setItem('access_token', data.access_token)
 }
 
-auth.logout = function () {
+auth.logout = () => {
   localStorage.removeItem('renew_id')
   localStorage.removeItem('access_token')
 }
 
-auth.isLoggedIn = function () {
+auth.isLoggedIn = () => {
   return localStorage.getItem('access_token')
 }
 
