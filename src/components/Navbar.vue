@@ -1,6 +1,7 @@
 <template lang="pug">
   .navbar
-    img.logo(src='../assets/wbooks_logo.svg')
+    router-link(:to='{ name: "dashboard" }')
+      img.logo(src='../assets/wbooks_logo.svg')
     .user-actions
       img.notifications(src='../assets/notifications.svg')
       img.add-book(src='../assets/add_book.svg')
@@ -35,7 +36,7 @@ const navbar = {
   data() {
     return {
       userOptions,
-      showUserDropdown: true
+      showUserDropdown: false
     }
   },
   methods: {
@@ -55,9 +56,37 @@ export default navbar
 @import "../scss/variables";
 
 .navbar {
-  border-bottom: 1px solid $black;
+  box-shadow: 0px 5px 10px $grey-2;
   display: flex;
   justify-content: space-between;
+  padding: 20px 50px;
+
+  .logo {
+    width: 170px;
+    height: 40px;
+  }
+
+  .user-actions {
+    display: flex;
+    align-items: center;
+
+    .notifications {
+      margin-right: 30px;
+    }
+
+    .add-book {
+      margin-right: 30px;
+    }
+
+    .profile {
+      position: relative;
+      border: 1px solid $grey-2;
+      border-radius: 100%;
+      width: 35px;
+      display: flex;
+      justify-content: center;
+    }
+  }
 }
 
 .user-avatar {

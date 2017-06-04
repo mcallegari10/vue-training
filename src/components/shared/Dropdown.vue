@@ -20,5 +20,31 @@ const dropdown = {
 export default dropdown
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+@import "../../scss/variables";
+
+.dropdown {
+  position: absolute;
+  right: 0;
+  top: 150%;
+  background-color: white;
+
+  .menu {
+    min-width: 160px;
+    width: 100%;
+    box-shadow: 0px 5px 10px $grey-2;
+
+    .list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+
+      .option {
+        cursor: pointer;
+        border-bottom: 1px solid $grey-1;
+        padding: 10px;
+      }
+    }
+  }
+}
 </style>
