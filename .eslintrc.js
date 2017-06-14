@@ -29,6 +29,8 @@ module.exports = {
     "func-names": ["error", "never"],
     // "space-before-function-paren": ["error", "never"],
     "semi": ["error", "never"],
+    "no-param-reassign": ["error", { "props": false }],
+    "no-shadow": ["error", { "builtinGlobals": false, "hoist": "functions", "allow": ["state"] }],
     // don't require .vue extension when importing
     'import/extensions': ['error', 'always', {
       'js': 'never',

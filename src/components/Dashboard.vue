@@ -2,15 +2,15 @@
   .dashboard
     .dashboard-container
       form.filter(@submit.prevent='filterBooks')
-        select.filter-value.m-right-3(v-model='filterAtt')
+        select.filter-value.m-right-3(v-model='filters.filterAtt')
           option(v-for='option in filterOptions'  :value='option.value')
             | {{ option.label }}
         .search-value
-          input.filter-value(type='text' placeholder='Buscar...' v-model='filterValue')
+          input.filter-value(type='text' placeholder='Buscar...' v-model='filters.filterValue')
           button.search-button(type='submit')
             img(src='../assets/search.svg')
       .books-container
-        router-link.book(v-for='book of filteredBooks'  :key='book.id'  :to='{ name: "book", params: { id: book.id }}')
+        router-link.book(v-for='book of books'  :key='book.id'  :to='{ name: "book", params: { id: book.id }}')
           img.book-cover(:src='book.image_url'  :class='{ "no-cover": !book.image_url }')
           h5.book-title
             | {{ book.title }}
@@ -19,36 +19,30 @@
 </template>
 
 <script>
-import booksService from '../services/booksService'
-
-const filterOptions = [
-  { label: 'Seleccionar filtro', value: '' },
-  { label: 'Autor', value: 'author' },
-  { label: 'Nombre', value: 'title' }
-]
+import { mapGetters } from 'vuex'
 
 const dashboard = {
   name: 'dashboard',
   data() {
     return {
-      filterOptions,
-      filterValue: '',
-      filterAtt: '',
-      books: null,
-      filteredBooks: null
+      filters: {
+        filterAtt: '',
+        filterValue: ''
+      }
     }
   },
-  created() {
-    booksService.getBooks().then((response) => {
-      this.books = response
-      this.filteredBooks = response
+  computed: {
+    ...mapGetters({
+      filterOptions: 'filterOptions',
+      books: 'books'
     })
+  },
+  created() {
+    this.$store.dispatch('getAllBooks')
   },
   methods: {
     filterBooks() {
-      this.filteredBooks = this.books.filter((book) => {
-        return book[this.filterAtt].toLowerCase().includes(this.filterValue.toLowerCase())
-      })
+      this.$store.dispatch('filterBooks', { filters: this.filters })
     }
   }
 }
