@@ -2,7 +2,7 @@
   .book-detail-container
     router-link.go-back(:to='{ name: "dashboard" }')
       | < Volver
-    .book-detail(v-if='!error')
+    .book-detail(v-if='book && !bookNotFound')
       img.book-cover(:src='book.image_url'  :class='{ "no-cover": !book.image_url }')
       .book-info
         h4.title
@@ -17,36 +17,36 @@
           | {{ summary }}
         button.rent-button
           | Alquilar
-    .book-detail(v-if='error')
+    .book-detail(v-if='bookNotFound')
       | 404 Book not found!
 </template>
 
 <script>
-import booksService from '../services/booksService'
+import { mapGetters } from 'vuex'
 
 const bookDetail = {
   name: 'bookDetail',
   props: ['id'],
-  data() {
-    return {
-      book: {},
-      summary: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-      error: false
-    }
+  computed: {
+    ...mapGetters({
+      book: 'book',
+      summary: 'summary',
+      bookNotFound: 'bookNotFound'
+    })
   },
   created() {
     this.searchBook()
-    if (this.book) {
-      this.error = false
-    } else {
-      this.error = true
-    }
+  },
+  destroyed() {
+    this.clearBook()
   },
   methods: {
     searchBook() {
-      booksService.getBookDetail(this.id).then((response) => {
-        this.book = response
-      })
+      const bookId = this.id
+      this.$store.dispatch('getBookDetail', bookId)
+    },
+    clearBook() {
+      this.$store.dispatch('clearState')
     }
   }
 }

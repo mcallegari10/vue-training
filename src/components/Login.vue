@@ -7,7 +7,7 @@
         | El usuario y/o contraseña son incorrectos
       label.data-label(for='email')
         | Email
-      input.data-input(type='email' v-model='email' v-validate='"required|email"' name='email')
+      input.data-input(type='email' v-model='user.email' v-validate='"required|email"' name='email')
       .errors(v-if='errors.has("email")')
         span.error(v-if='errors.firstRule("email") === "required"')
           | El campo es requerido
@@ -15,7 +15,7 @@
           | Debe ingresar un email valido
       label.data-label(for='password')
         | Contraseña
-      input.data-input(type='password' v-model='password' v-validate='"required|min: 2"' maxlength='52' name='password')
+      input.data-input(type='password' v-model='user.password' v-validate='"required|min: 2"' maxlength='52' name='password')
       .errors(v-if='errors.has("password")')
         span.error(v-if='errors.firstRule("password") === "required"')
           | El campo es requerido
@@ -29,27 +29,28 @@
 </template>
 
 <script>
-import sessionService from '../services/sessionService'
-import auth from '../auth'
+import { mapGetters } from 'vuex'
 
 const login = {
   name: 'login',
   data() {
     return {
-      email: '',
-      password: '',
-      showError: false
+      user: {
+        email: '',
+        password: ''
+      }
     }
+  },
+  computed: {
+    ...mapGetters({
+      showError: 'loginError'
+    })
   },
   methods: {
     login() {
       this.$validator.validateAll().then(() => {
-        sessionService.login(this.email, this.password).then((response) => {
-          this.showError = false
-          auth.login(response)
+        this.$store.dispatch('login', this.user).then(() => {
           this.$router.push({ name: 'dashboard' })
-        }).catch(() => {
-          this.showError = true
         })
       })
     }

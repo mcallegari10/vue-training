@@ -18,7 +18,7 @@ const userOptions = [
   {
     label: 'Perfil',
     callback() {
-      console.log('Go to prfile')
+      console.log('Go to profile')
     }
   },
   {

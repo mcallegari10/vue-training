@@ -23,7 +23,7 @@ const actions = {
   getAllBooks({ commit }) {
     booksService.getBooks().then((response) => {
       const booksToList = response
-      commit('listBooks', { booksToList })
+      commit('listBooks', booksToList)
     })
   },
   filterBooks({ commit }, filters) {
@@ -33,11 +33,11 @@ const actions = {
 }
 
 const mutations = {
-  listBooks(state, { booksToList }) {
+  listBooks(state, booksToList) {
     state.books = booksToList
     state.filteredBooks = booksToList
   },
-  changeFilters(state, { filters }) {
+  changeFilters(state, filters) {
     state.filterValue = filters.filterValue
     state.filterAtt = filters.filterAtt
   },
