@@ -5,16 +5,19 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import navbar from './components/Navbar'
-import auth from './auth'
 
 export default {
   name: 'app',
   components: { navbar },
   computed: {
-    isLoggedIn() {
-      return auth.isLoggedIn()
-    }
+    ...mapGetters({
+      isLoggedIn: 'user/isLoggedIn'
+    })
+  },
+  created() {
+    this.$store.dispatch('user/checkLoggedIn')
   }
 }
 </script>

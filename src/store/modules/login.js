@@ -6,17 +6,11 @@ const state = {
 }
 
 const getters = {
-  user() {
-    return {
-      email: state.email,
-      password: state.password
-    }
-  },
   loginError() { return state.showError }
 }
 
 const actions = {
-  async login({ commit }, user) {
+  async login({ dispatch, commit }, user) {
     return sessionService.login(user.email, user.password).then((response) => {
       commit('hideError')
       auth.login(response)

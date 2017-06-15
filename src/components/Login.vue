@@ -43,13 +43,14 @@ const login = {
   },
   computed: {
     ...mapGetters({
-      showError: 'loginError'
+      showError: 'user/loginError'
     })
   },
   methods: {
     login() {
       this.$validator.validateAll().then(() => {
-        this.$store.dispatch('login', this.user).then(() => {
+        this.$store.dispatch('user/login', this.user).then(() => {
+          this.$store.dispatch('user/loggedIn')
           this.$router.push({ name: 'dashboard' })
         })
       })

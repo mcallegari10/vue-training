@@ -14,4 +14,10 @@ sessionService.signUp = (user) => {
   })
 }
 
+sessionService.getUserData = () => {
+  return api.get('/users/me').then((response) => {
+    return response.data
+  })
+}
+
 export default sessionService
