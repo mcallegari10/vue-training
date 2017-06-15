@@ -58,8 +58,6 @@
 </template>
 
 <script>
-import sessionService from '../services/sessionService'
-
 const signUp = {
   name: 'signUp',
   data() {
@@ -75,8 +73,10 @@ const signUp = {
   },
   methods: {
     signUp() {
-      sessionService.signUp(this.user).then(() => {
-        this.$router.push({ name: 'login' })
+      this.$validator.validateAll().then(() => {
+        this.$store.dispatch('user/signUp', this.user).then(() => {
+          this.$router.push({ name: 'login' })
+        })
       })
     }
   }

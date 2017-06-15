@@ -50,8 +50,10 @@ const login = {
     login() {
       this.$validator.validateAll().then(() => {
         this.$store.dispatch('user/login', this.user).then(() => {
-          this.$store.dispatch('user/loggedIn')
-          this.$router.push({ name: 'dashboard' })
+          if (!this.showError) {
+            this.$store.dispatch('user/loggedIn')
+            this.$router.push({ name: 'dashboard' })
+          }
         })
       })
     }
