@@ -3,18 +3,12 @@ import booksService from '../../services/booksService'
 const state = {
   books: null,
   filteredBooks: null,
-  filterOptions: [
-    { label: 'Seleccionar filtro', value: '' },
-    { label: 'Autor', value: 'author' },
-    { label: 'Nombre', value: 'title' }
-  ],
   filterValue: '',
   filterAtt: ''
 }
 
 const getters = {
   books() { return state.filteredBooks },
-  filterOptions() { return state.filterOptions },
   filterValue() { return state.filterValue },
   filterAtt() { return state.filterAtt }
 }
@@ -26,8 +20,13 @@ const actions = {
       commit('listBooks', booksToList)
     })
   },
-  filterBooks({ commit }, filters) {
-    commit('changeFilters', filters)
+  changeFilterAtt({ commit }, newAtt) {
+    commit('changeAtt', newAtt)
+  },
+  changeFilterValue({ commit }, newValue) {
+    commit('changeValue', newValue)
+  },
+  filterBooks({ commit }) {
     commit('filterBooks')
   }
 }
@@ -37,9 +36,11 @@ const mutations = {
     state.books = booksToList
     state.filteredBooks = booksToList
   },
-  changeFilters(state, filters) {
-    state.filterValue = filters.filterValue
-    state.filterAtt = filters.filterAtt
+  changeAtt(state, newAtt) {
+    state.filterAtt = newAtt
+  },
+  changeValue(state, newValue) {
+    state.filterValue = newValue
   },
   filterBooks(state) {
     state.filteredBooks = state.books.filter((book) => {

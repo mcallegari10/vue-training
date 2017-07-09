@@ -7,7 +7,7 @@
       img.add-book(src='../assets/add_book.svg')
       .profile(@click='toggleUserOptions')
         img.user-avatar(src='../assets/vuejs_logo.png' alt='profile')
-        dropdown(:options='userOptions'  :toggle='showUserDropdown' @selectOption='selectOption')
+        dropdown(:options='userOptions' :toggle='showUserDropdown' @selectOption='selectOption')
 </template>
 
 <script>
@@ -18,7 +18,7 @@ const userOptions = [
   {
     label: 'Perfil',
     callback() {
-      console.log('Go to profile')
+      // todo
     }
   },
   {

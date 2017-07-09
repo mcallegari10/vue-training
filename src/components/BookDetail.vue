@@ -3,7 +3,7 @@
     router-link.go-back(:to='{ name: "dashboard" }')
       | < Volver
     .book-detail(v-if='book && !bookNotFound')
-      img.book-cover(:src='book.image_url'  :class='{ "no-cover": !book.image_url }')
+      img.book-cover(:src='book.image_url' :class='{ "no-cover": !book.image_url }')
       .book-info
         h4.title
           | {{ book.title }}
