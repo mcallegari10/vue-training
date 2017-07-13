@@ -2,20 +2,31 @@ import sessionService from '../../services/sessionService'
 import auth from '../../auth'
 
 const state = {
+  loginData: {
+    email: '',
+    password: ''
+  },
   user: null,
   isLoggedIn: false,
   showError: false
 }
 
 const getters = {
+  loginData() { return state.loginData },
   user() { return state.user },
   isLoggedIn() { return state.isLoggedIn },
   loginError() { return state.showError }
 }
 
 const actions = {
-  async login({ commit }, user) {
-    return sessionService.login(user.email, user.password).then((response) => {
+  changeLoginEmail({ commit }, newEmail) {
+    commit('setLoginEmail', newEmail)
+  },
+  changeLoginPassword({ commit }, newPassword) {
+    commit('setLoginPassword', newPassword)
+  },
+  async login({ state, commit }) {
+    return sessionService.login(state.loginData).then((response) => {
       commit('hideError')
       auth.login(response)
     }).catch(() => {
@@ -45,6 +56,12 @@ const actions = {
 }
 
 const mutations = {
+  setLoginEmail(state, email) {
+    state.loginData.email = email
+  },
+  setLoginPassword(state, password) {
+    state.loginData.password = password
+  },
   showError(state) {
     state.showError = true
   },

@@ -2,8 +2,8 @@ import api from './api'
 
 const sessionService = { }
 
-sessionService.login = (email, password) => {
-  return api.post('/users/sessions', { email, password }).then((response) => {
+sessionService.login = (loginData) => {
+  return api.post('/users/sessions', { email: loginData.email, password: loginData.password }).then((response) => {
     return response.data
   })
 }

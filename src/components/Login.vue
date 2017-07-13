@@ -7,7 +7,7 @@
         | El usuario y/o contraseña son incorrectos
       label.data-label(for='email')
         | Email
-      input.data-input(type='email' v-model='user.email' v-validate='"required|email"' name='email')
+      input.data-input(type='email' v-model='user.email' v-validate='"required|email"' name='email' @change='changeEmail')
       .errors(v-if='errors.has("email")')
         span.error(v-if='errors.firstRule("email") === "required"')
           | El campo es requerido
@@ -15,7 +15,7 @@
           | Debe ingresar un email valido
       label.data-label(for='password')
         | Contraseña
-      input.data-input(type='password' v-model='user.password' v-validate='"required|min: 2"' maxlength='52' name='password')
+      input.data-input(type='password' v-model='user.password' v-validate='"required|min: 2"' maxlength='52' name='password' @change='changePassword')
       .errors(v-if='errors.has("password")')
         span.error(v-if='errors.firstRule("password") === "required"')
           | El campo es requerido
@@ -33,23 +33,22 @@ import { mapGetters } from 'vuex'
 
 const login = {
   name: 'login',
-  data() {
-    return {
-      user: {
-        email: '',
-        password: ''
-      }
-    }
-  },
   computed: {
     ...mapGetters({
+      user: 'user/loginData',
       showError: 'user/loginError'
     })
   },
   methods: {
+    changeEmail(event) {
+      this.$store.dispatch('user/changeLoginEmail', event.target.value)
+    },
+    changePassword(event) {
+      this.$store.dispatch('user/changeLoginPassword', event.target.value)
+    },
     login() {
       this.$validator.validateAll().then(() => {
-        this.$store.dispatch('user/login', this.user).then(() => {
+        this.$store.dispatch('user/login').then(() => {
           if (!this.showError) {
             this.$store.dispatch('user/loggedIn')
             this.$router.push({ name: 'dashboard' })
