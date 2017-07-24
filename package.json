@@ -8,13 +8,11 @@
     "dev": "node build/dev-server.js",
     "start": "node build/dev-server.js",
     "build": "node build/build.js",
-    "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
-    "test": "npm run unit",
+    "test": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
     "lint": "eslint --ext .js,.vue src test/unit/specs"
   },
   "dependencies": {
     "axios": "^0.16.1",
-    "jest": "^20.0.4",
     "lodash": "^4.17.4",
     "node-sass": "4.5.2",
     "pug": "^2.0.0-rc.1",

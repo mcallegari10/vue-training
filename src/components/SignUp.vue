@@ -74,7 +74,7 @@ const signUp = {
   methods: {
     signUp() {
       this.$validator.validateAll().then(() => {
-        this.$store.dispatch('user/signUp', this.user).then(() => {
+        this.$store.dispatch('signUp', this.user).then(() => {
           this.$router.push({ name: 'login' })
         })
       })

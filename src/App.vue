@@ -13,11 +13,11 @@ export default {
   components: { navbar },
   computed: {
     ...mapGetters({
-      isLoggedIn: 'user/isLoggedIn'
+      isLoggedIn: 'isLoggedIn'
     })
   },
   created() {
-    this.$store.dispatch('user/checkLoggedIn')
+    this.$store.dispatch('checkLoggedIn')
   }
 }
 </script>

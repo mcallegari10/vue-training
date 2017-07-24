@@ -25,7 +25,7 @@ const userOptions = [
     label: 'Cerrar sesión',
     callback(vm) {
       auth.logout()
-      vm.$store.dispatch('user/loggedOut')
+      vm.$store.dispatch('loggedOut')
       vm.$router.push({ name: 'login' })
     }
   }

@@ -35,22 +35,22 @@ const login = {
   name: 'login',
   computed: {
     ...mapGetters({
-      user: 'user/loginData',
-      showError: 'user/loginError'
+      user: 'loginData',
+      showError: 'loginError'
     })
   },
   methods: {
     changeEmail(event) {
-      this.$store.dispatch('user/changeLoginEmail', event.target.value)
+      this.$store.dispatch('changeLoginEmail', event.target.value)
     },
     changePassword(event) {
-      this.$store.dispatch('user/changeLoginPassword', event.target.value)
+      this.$store.dispatch('changeLoginPassword', event.target.value)
     },
     login() {
       this.$validator.validateAll().then(() => {
-        this.$store.dispatch('user/login').then(() => {
+        this.$store.dispatch('login').then(() => {
           if (!this.showError) {
-            this.$store.dispatch('user/loggedIn')
+            this.$store.dispatch('loggedIn')
             this.$router.push({ name: 'dashboard' })
           }
         })
