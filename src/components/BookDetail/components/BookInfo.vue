@@ -1,5 +1,5 @@
 <template lang="pug">
-  .book-container(v-if='book && !bookNotFound')
+  .book-info-container(v-if='book && !bookNotFound')
     img.book-cover(:src='book.image_url' :class='{ "no-cover": !book.image_url }')
     .book-info
       h4.title
@@ -36,11 +36,9 @@ export default BookInfo
 <style lang="scss" scoped>
 @import "../../../scss/variables";
 
-.book-container {
+.book-info-container {
   border-bottom: 2px solid $blue-1;
   display: flex;
-  justify-content: center;
-  margin: 40px auto;
   max-width: 800px;
   padding-bottom: 35px;
 

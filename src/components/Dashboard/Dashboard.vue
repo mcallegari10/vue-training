@@ -8,7 +8,7 @@
 import FilterBooks from './components/Filter'
 import Books from './components/Books'
 
-const dashboard = {
+const Dashboard = {
   name: 'dashboard',
   components: { FilterBooks, Books },
   beforeMount() {
@@ -16,7 +16,7 @@ const dashboard = {
   }
 }
 
-export default dashboard
+export default Dashboard
 </script>
 
 <style lang="scss" scoped>
